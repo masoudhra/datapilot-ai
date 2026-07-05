@@ -1,92 +1,146 @@
-# datapilot-ai
+# DataPilot AI
 
-Simple ReAct agent
-Agent generated with `agents-cli` version `1.0.0`
+DataPilot AI is an AI-powered SQL Interview Preparation Agent built with **Google ADK 2.0** and **Gemini 2.5 Flash**.
 
-## Project Structure
+The agent helps aspiring Data Analysts practice SQL interview questions by generating realistic interview scenarios, evaluating SQL answers, and providing structured interview feedback.
+
+---
+
+## Features
+
+- 🎯 Generate realistic SQL interview questions
+- 🗂️ Provide business scenarios and table schemas
+- 🧠 Evaluate SQL answers
+- ✅ Validate SQL syntax using a custom Python tool
+- 📊 Give an interview score
+- 💡 Highlight strengths and areas for improvement
+- 📚 Recommend the next learning topic
+
+---
+
+## Tech Stack
+
+- Google ADK 2.0
+- Gemini 2.5 Flash
+- Python
+- Agents CLI
+- Local ADK Playground
+
+---
+
+## Agent Workflow
 
 ```
-datapilot-ai/
-├── app/         # Core agent code
-│   ├── agent.py               # Main agent logic
-│   ├── fast_api_app.py        # FastAPI Backend server
-│   └── app_utils/             # App utilities and helpers
-├── tests/                     # Unit, integration, and load tests
-├── GEMINI.md                  # AI-assisted development guide
-└── pyproject.toml             # Project dependencies
+User
+      ↓
+DataPilot AI
+      ↓
+Generate SQL Interview Question
+      ↓
+User submits SQL Answer
+      ↓
+validate_sql_query Tool
+      ↓
+Interview Feedback
+      ↓
+Interview Score
+      ↓
+Learning Recommendation
 ```
 
-> 💡 **Tip:** Use [Antigravity CLI](https://antigravity.google/) for AI-assisted development - project context is pre-configured in `GEMINI.md`.
+---
 
-## Requirements
+## Example Prompt
 
-Before you begin, ensure you have:
-- **uv**: Python package manager (used for all dependency management in this project) - [Install](https://docs.astral.sh/uv/getting-started/installation/) ([add packages](https://docs.astral.sh/uv/concepts/dependencies/) with `uv add <package>`)
-- **agents-cli**: Agents CLI - Install with `uv tool install google-agents-cli`
-- **Google Cloud SDK**: For GCP services - [Install](https://cloud.google.com/sdk/docs/install)
-
-
-## Quick Start
-
-Install `agents-cli` and its skills if not already installed:
-
-```bash
-uvx google-agents-cli setup
+```text
+Start my Data Analyst SQL interview.
 ```
 
-Install required packages:
+---
+
+## Example SQL Answer
+
+```sql
+SELECT
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    SUM(o.total_amount) AS total_spent,
+    COUNT(o.order_id) AS number_of_orders
+FROM Customers c
+JOIN Orders o
+    ON c.customer_id = o.customer_id
+GROUP BY
+    c.customer_id,
+    c.first_name,
+    c.last_name
+ORDER BY total_spent DESC
+LIMIT 5;
+```
+
+---
+
+## Example Feedback
+
+```
+Interview Score: 9/10
+
+Strengths
+• Correct JOIN
+• Proper aggregation
+• Good use of GROUP BY
+
+Areas for Improvement
+• Consider handling customers without orders using LEFT JOIN.
+
+Learning Recommendation
+Review OUTER JOINs and Window Functions.
+```
+
+---
+
+## Security
+
+- API keys are stored locally in `.env`
+- `.env` is excluded from Git using `.gitignore`
+- `.env.example` is provided as a safe template
+
+---
+
+## Run Locally
+
+Install dependencies:
 
 ```bash
 agents-cli install
 ```
 
-Test the agent with a local web server:
+Run the local playground:
 
 ```bash
 agents-cli playground
 ```
 
-You can also use features from the [ADK](https://adk.dev/) CLI with `uv run adk`.
+Then open:
 
-## Commands
-
-| Command              | Description                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| `agents-cli install` | Install dependencies using uv                                                         |
-| `agents-cli playground` | Launch local development environment                                                  |
-| `agents-cli lint`    | Run code quality checks                                                               |
-| `agents-cli eval`    | Evaluate agent behavior (generate, grade, analyze, and more — see `agents-cli eval --help`) |
-| `uv run pytest tests/unit tests/integration` | Run unit and integration tests                                                        || [A2A Inspector](https://github.com/a2aproject/a2a-inspector) | Launch A2A Protocol Inspector                                                        |
-
-## 🛠️ Project Management
-
-| Command | What It Does |
-|---------|--------------|
-| `agents-cli scaffold enhance` | Add CI/CD pipelines and Terraform infrastructure |
-| `agents-cli infra cicd` | One-command setup of entire CI/CD pipeline + infrastructure |
-| `agents-cli scaffold upgrade` | Auto-upgrade to latest version while preserving customizations |
+```
+http://127.0.0.1:8080
+```
 
 ---
 
-## Development
+## Future Improvements
 
-Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
+- Multiple interview difficulty levels
+- Advanced SQL validation
+- Personalized learning plans
+- Python interview mode
+- Power BI interview mode
 
-## Deployment
+---
 
-```bash
-gcloud config set project <your-project-id>
-agents-cli deploy
-```
+## Capstone Project
 
-To add CI/CD and Terraform, run `agents-cli scaffold enhance`.
-To set up your production infrastructure, run `agents-cli infra cicd`.
+This project was developed for the **Kaggle 5-Day AI Agents: Intensive Vibe Coding Course with Google** Capstone Project.
 
-## Observability
-
-Built-in telemetry exports to Cloud Trace, BigQuery, and Cloud Logging.
-
-## A2A Inspector
-
-This agent supports the [A2A Protocol](https://a2a-protocol.org/). Use the [A2A Inspector](https://github.com/a2aproject/a2a-inspector) to test interoperability.
-See the [A2A Inspector docs](https://github.com/a2aproject/a2a-inspector) for details.
+Built with ❤️ using Google ADK 2.0 and Gemini.
